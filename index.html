@@ -242,7 +242,7 @@
     }
 
     .cmd-flash.leaving {
-      animation: toast-out 0.5s ease-in forwards;
+      animation: toast-out var(--leave-duration, 0.5s) ease-in forwards;
     }
 
     .cmd-flash-label {
@@ -258,7 +258,7 @@
     }
 
     .cmd-flash.leaving .cmd-flash-label {
-      animation: label-out 0.5s ease-in forwards;
+      animation: label-out var(--leave-duration, 0.5s) ease-in forwards;
     }
 
     @keyframes toast-in {
@@ -339,14 +339,14 @@
 
     /* ── FAQ ── */
     .faq-section {
-      margin-top: 40px;
+      margin-top: 64px;
     }
 
     .faq-title {
-      font-size: 22px;
+      font-size: 28px;
       font-weight: 700;
       color: var(--color-text);
-      margin-bottom: 16px;
+      margin-bottom: 28px;
     }
 
     .faq-list {
@@ -1139,11 +1139,11 @@ function etgx {
 
     /* ── Copy ── */
     const COPY_TEXTS = ['Скопировано', 'Спизжено', 'Забрал', 'Теперь он мой', 'Ща сделаю!', 'Забрал!', 'Принял!', 'Понёс!', 'Ща все будет!'];
-    const DUP_TEXTS  = ['Это уже скопировано!', 'Але, что за приколы?', 'Ты не понял?!', 'Все, тостик устал, и ты передохни!'];
+    const DUP_TEXTS  = ['Это уже скопировано!', 'Але, что за приколы?', 'Ты не понял?!', 'Копировальная машинка устала, передохни!'];
 
     const blockState = new WeakMap();
 
-    function showToast(block, label) {
+    function showToast(block, label, leaveDuration = 500) {
       const existing = block.querySelector('.cmd-flash');
       if (existing) existing.remove();
 
@@ -1153,11 +1153,12 @@ function etgx {
       flash.className = 'cmd-flash';
       flash.style.setProperty('--rot', rot);
       flash.style.setProperty('--rot-end', rotEnd);
+      flash.style.setProperty('--leave-duration', leaveDuration + 'ms');
       flash.innerHTML = '<span class="cmd-flash-label">' + label + '</span>';
       block.appendChild(flash);
 
       setTimeout(() => flash.classList.add('leaving'), 1000);
-      setTimeout(() => flash.remove(), 1500);
+      setTimeout(() => flash.remove(), 1000 + leaveDuration);
     }
 
     function copyCmd(block) {
@@ -1182,13 +1183,13 @@ function etgx {
         if (s.dupCount === 0) {
           showToast(block, COPY_TEXTS[Math.floor(Math.random() * COPY_TEXTS.length)]);
         } else if (s.dupCount <= DUP_TEXTS.length) {
-          showToast(block, DUP_TEXTS[s.dupCount - 1]);
+          showToast(block, DUP_TEXTS[s.dupCount - 1], s.dupCount === DUP_TEXTS.length ? 3000 : 500);
           if (s.dupCount === DUP_TEXTS.length) {
             s.coolingDown = true;
             blockState.set(block, s);
             setTimeout(() => {
               blockState.set(block, { lastText: null, dupCount: 0, coolingDown: false });
-            }, 3000);
+            }, 5000);
           }
         }
       });
