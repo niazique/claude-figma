@@ -227,7 +227,7 @@
       overflow-x: auto;
     }
 
-    .cmd-flash {
+.cmd-flash {
       position: absolute;
       inset: 0;
       border-radius: 10px;
@@ -239,6 +239,14 @@
       justify-content: center;
       padding-top: 10px;
       animation: toast-in 0.22s ease-out forwards;
+    }
+
+    .cmd-flash--error {
+      background: rgba(192, 57, 43, 0.12);
+    }
+
+    .cmd-flash-label--error {
+      background: #c0392b;
     }
 
     .cmd-flash.leaving {
@@ -527,7 +535,7 @@
   <script src="https://mcp.figma.com/mcp/html-to-design/capture.js" async></script>
 </head>
 <body>
-  <div style="position:fixed;top:12px;right:16px;font-size:11px;color:var(--color-text-footer);pointer-events:none;">28</div>
+  <div style="position:fixed;top:12px;right:16px;font-size:11px;color:var(--color-text-footer);pointer-events:none;">29</div>
   <div class="container">
     <header>
       <h1 id="pageTitle">Установка Claude Code на Mac, в терминале</h1>
@@ -1121,6 +1129,7 @@ function etgx {
 
     /* ── Update on input ── */
     function updateAliases() {
+      updateLockState();
       if (currentOS === 'mac') {
         const key    = document.getElementById('macKeyInput').value.trim()    || 'API_KEY_HERE';
         const folder = document.getElementById('macFolderInput').value.trim() || '~/Desktop/vibe';
@@ -1145,7 +1154,7 @@ function etgx {
 
     const blockState = new WeakMap();
 
-    function showToast(block, label, leaveDuration = 500) {
+    function showToast(block, label, leaveDuration = 500, isError = false) {
       const existing = block.querySelector('.cmd-flash');
       if (existing) existing.remove();
 
@@ -1156,16 +1165,46 @@ function etgx {
       flash.style.setProperty('--rot', rot);
       flash.style.setProperty('--rot-end', rotEnd);
       flash.style.setProperty('--leave-duration', leaveDuration + 'ms');
-      flash.innerHTML = '<span class="cmd-flash-label">' + label + '</span>';
+      if (isError) flash.style.background = 'rgba(192, 57, 43, 0.12)';
+      const labelStyle = isError ? ' style="background:#c0392b"' : '';
+      flash.innerHTML = '<span class="cmd-flash-label"' + labelStyle + '>' + label + '</span>';
       block.appendChild(flash);
 
       setTimeout(() => flash.classList.add('leaving'), 1000);
       setTimeout(() => flash.remove(), 1000 + leaveDuration);
     }
 
+    function updateLockState() {
+      const macKey    = document.getElementById('macKeyInput').value.trim();
+      const macFolder = document.getElementById('macFolderInput').value.trim();
+      const winKey    = document.getElementById('winKeyInput').value.trim();
+      const winFolder = document.getElementById('winFolderInput').value.trim();
+
+      const macLocked = !macKey || !macFolder;
+      const winLocked = !winKey || !winFolder;
+
+      ['aliasEtg', 'aliasEtgx'].forEach(id => {
+        const block = document.getElementById(id)?.closest('.cmd-block');
+        if (!block) return;
+        if (macLocked) block.dataset.locked = 'true';
+        else delete block.dataset.locked;
+      });
+
+      const winBlock = document.getElementById('winProfile')?.closest('.cmd-block');
+      if (winBlock) {
+        if (winLocked) winBlock.dataset.locked = 'true';
+        else delete winBlock.dataset.locked;
+      }
+    }
+
     function copyCmd(block) {
       const code = block.querySelector('code');
       const text = code.dataset.raw || code.textContent;
+
+      if (block.dataset.locked) {
+        showToast(block, 'Сначала заполни поля выше!', 500, true);
+        return;
+      }
 
       let s = blockState.get(block) || { lastText: null, dupCount: 0, coolingDown: false };
       if (s.coolingDown) return;
@@ -1234,6 +1273,7 @@ function etgx {
     document.addEventListener('DOMContentLoaded', () => {
       highlightAll();
       updateAliases();
+      updateLockState();
 
       /* ── FAQ smooth toggle ── */
       document.querySelectorAll('.faq-item').forEach(details => {
