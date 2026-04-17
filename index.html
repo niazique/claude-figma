@@ -535,7 +535,7 @@
   <script src="https://mcp.figma.com/mcp/html-to-design/capture.js" async></script>
 </head>
 <body>
-  <div style="position:fixed;top:12px;right:16px;font-size:11px;color:var(--color-text-footer);pointer-events:none;">32</div>
+  <div style="position:fixed;top:12px;right:16px;font-size:11px;color:var(--color-text-footer);pointer-events:none;">33</div>
   <div class="container">
     <header>
       <h1 id="pageTitle">Установка Claude Code на Mac, в терминале</h1>
@@ -629,7 +629,7 @@
           <div class="api-key-input-wrap">
             <div class="input-row">
               <input id="macFolderInput" type="text" placeholder="~/Desktop/vibe"
-                oninput="updateAliases()" autocomplete="off" spellcheck="false" />
+                readonly autocomplete="off" spellcheck="false" style="cursor:default" />
               <button class="pick-btn" onclick="pickFolder()">выбрать</button>
             </div>
             <div class="input-row">
@@ -800,7 +800,7 @@
           <div class="api-key-input-wrap">
             <div class="input-row">
               <input id="winFolderInput" type="text" placeholder="C:\Users\Имя\Desktop\vibe"
-                oninput="updateAliases()" autocomplete="off" spellcheck="false" />
+                readonly autocomplete="off" spellcheck="false" style="cursor:default" />
               <button class="pick-btn" onclick="pickFolder()">выбрать</button>
             </div>
             <div class="input-row">
