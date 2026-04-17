@@ -535,7 +535,7 @@
   <script src="https://mcp.figma.com/mcp/html-to-design/capture.js" async></script>
 </head>
 <body>
-  <div style="position:fixed;top:12px;right:16px;font-size:11px;color:var(--color-text-footer);pointer-events:none;">30</div>
+  <div style="position:fixed;top:12px;right:16px;font-size:11px;color:var(--color-text-footer);pointer-events:none;">31</div>
   <div class="container">
     <header>
       <h1 id="pageTitle">Установка Claude Code на Mac, в терминале</h1>
@@ -641,9 +641,9 @@
 
           <p class="step-desc" style="margin-top: 4px;">Выполни обе команды по очереди:</p>
           <div class="cmd-block">
-            <code id="aliasEtg">echo 'alias etg='"'"'cd ~/Desktop/vibe && ANTHROPIC_AUTH_TOKEN="API_KEY_HERE" ANTHROPIC_BASE_URL="https://llmgate.etg.team" ANTHROPIC_MODEL="bedrock-claude-4-6-opus" ANTHROPIC_DEFAULT_OPUS_MODEL="bedrock-claude-4-6-opus" ANTHROPIC_DEFAULT_SONNET_MODEL="bedrock-claude-4-6-sonnet" ANTHROPIC_DEFAULT_HAIKU_MODEL="bedrock-claude-4-5-haiku" CLAUDE_CODE_ENABLE_TELEMETRY="0" CLAUDE_CODE_DISABLE_NONESSENTIAL_TRAFFIC="1" CLAUDE_CODE_DISABLE_EXPERIMENTAL_BETAS="1" DISABLE_PROMPT_CACHING_OPUS="1" DISABLE_PROMPT_CACHING_SONNET="1" DISABLE_PROMPT_CACHING_HAIKU="1" claude'"'"'' >> ~/.zshrc</code>          </div>
+            <code id="aliasEtg">echo 'alias etg='"'"'cd ~/Desktop/vibe && ANTHROPIC_AUTH_TOKEN="API_KEY_HERE" ANTHROPIC_BASE_URL="https://llmgate.etg.team" ANTHROPIC_MODEL="bedrock-claude-4-6-sonnet" ANTHROPIC_DEFAULT_OPUS_MODEL="bedrock-claude-4-6-opus" ANTHROPIC_DEFAULT_SONNET_MODEL="bedrock-claude-4-6-sonnet" ANTHROPIC_DEFAULT_HAIKU_MODEL="bedrock-claude-4-5-haiku" CLAUDE_CODE_ENABLE_TELEMETRY="0" CLAUDE_CODE_DISABLE_NONESSENTIAL_TRAFFIC="1" CLAUDE_CODE_DISABLE_EXPERIMENTAL_BETAS="1" DISABLE_PROMPT_CACHING_OPUS="1" DISABLE_PROMPT_CACHING_SONNET="1" DISABLE_PROMPT_CACHING_HAIKU="1" claude'"'"'' >> ~/.zshrc</code>          </div>
           <div class="cmd-block">
-            <code id="aliasEtgx">echo 'alias etgx='"'"'cd ~/Desktop/vibe && ANTHROPIC_AUTH_TOKEN="API_KEY_HERE" ANTHROPIC_BASE_URL="https://llmgate.etg.team" ANTHROPIC_MODEL="bedrock-claude-4-6-opus" ANTHROPIC_DEFAULT_OPUS_MODEL="bedrock-claude-4-6-opus" ANTHROPIC_DEFAULT_SONNET_MODEL="bedrock-claude-4-6-sonnet" ANTHROPIC_DEFAULT_HAIKU_MODEL="bedrock-claude-4-5-haiku" CLAUDE_CODE_ENABLE_TELEMETRY="0" CLAUDE_CODE_DISABLE_NONESSENTIAL_TRAFFIC="1" CLAUDE_CODE_DISABLE_EXPERIMENTAL_BETAS="1" DISABLE_PROMPT_CACHING_OPUS="1" DISABLE_PROMPT_CACHING_SONNET="1" DISABLE_PROMPT_CACHING_HAIKU="1" claude --dangerously-skip-permissions'"'"'' >> ~/.zshrc</code>          </div>
+            <code id="aliasEtgx">echo 'alias etgx='"'"'cd ~/Desktop/vibe && ANTHROPIC_AUTH_TOKEN="API_KEY_HERE" ANTHROPIC_BASE_URL="https://llmgate.etg.team" ANTHROPIC_MODEL="bedrock-claude-4-6-sonnet" ANTHROPIC_DEFAULT_OPUS_MODEL="bedrock-claude-4-6-opus" ANTHROPIC_DEFAULT_SONNET_MODEL="bedrock-claude-4-6-sonnet" ANTHROPIC_DEFAULT_HAIKU_MODEL="bedrock-claude-4-5-haiku" CLAUDE_CODE_ENABLE_TELEMETRY="0" CLAUDE_CODE_DISABLE_NONESSENTIAL_TRAFFIC="1" CLAUDE_CODE_DISABLE_EXPERIMENTAL_BETAS="1" DISABLE_PROMPT_CACHING_OPUS="1" DISABLE_PROMPT_CACHING_SONNET="1" DISABLE_PROMPT_CACHING_HAIKU="1" claude --dangerously-skip-permissions'"'"'' >> ~/.zshrc</code>          </div>
           <p class="step-desc" style="color:#c0392b;font-weight:600;margin-top:4px;">Важно: перезапусти терминал — закрой и открой заново.</p>
         </div>
       </div>
@@ -827,7 +827,7 @@
     Set-Location "C:\Users\Имя\Desktop\vibe"
     $env:ANTHROPIC_AUTH_TOKEN = "API_KEY_HERE"
     $env:ANTHROPIC_BASE_URL = "https://llmgate.etg.team"
-    $env:ANTHROPIC_MODEL = "bedrock-claude-4-6-opus"
+    $env:ANTHROPIC_MODEL = "bedrock-claude-4-6-sonnet"
     $env:ANTHROPIC_DEFAULT_OPUS_MODEL = "bedrock-claude-4-6-opus"
     $env:ANTHROPIC_DEFAULT_SONNET_MODEL = "bedrock-claude-4-6-sonnet"
     $env:ANTHROPIC_DEFAULT_HAIKU_MODEL = "bedrock-claude-4-5-haiku"
@@ -844,7 +844,7 @@ function etgx {
     Set-Location "C:\Users\Имя\Desktop\vibe"
     $env:ANTHROPIC_AUTH_TOKEN = "API_KEY_HERE"
     $env:ANTHROPIC_BASE_URL = "https://llmgate.etg.team"
-    $env:ANTHROPIC_MODEL = "bedrock-claude-4-6-opus"
+    $env:ANTHROPIC_MODEL = "bedrock-claude-4-6-sonnet"
     $env:ANTHROPIC_DEFAULT_OPUS_MODEL = "bedrock-claude-4-6-opus"
     $env:ANTHROPIC_DEFAULT_SONNET_MODEL = "bedrock-claude-4-6-sonnet"
     $env:ANTHROPIC_DEFAULT_HAIKU_MODEL = "bedrock-claude-4-5-haiku"
@@ -1049,15 +1049,15 @@ function etgx {
     let currentOS = 'mac';
 
     /* ── OS templates ── */
-    const MAC_ETG_TEMPLATE  = `echo 'alias etg='"'"'cd {FOLDER} && ANTHROPIC_AUTH_TOKEN="{KEY}" ANTHROPIC_BASE_URL="https://llmgate.etg.team" ANTHROPIC_MODEL="bedrock-claude-4-6-opus" ANTHROPIC_DEFAULT_OPUS_MODEL="bedrock-claude-4-6-opus" ANTHROPIC_DEFAULT_SONNET_MODEL="bedrock-claude-4-6-sonnet" ANTHROPIC_DEFAULT_HAIKU_MODEL="bedrock-claude-4-5-haiku" CLAUDE_CODE_ENABLE_TELEMETRY="0" CLAUDE_CODE_DISABLE_NONESSENTIAL_TRAFFIC="1" CLAUDE_CODE_DISABLE_EXPERIMENTAL_BETAS="1" DISABLE_PROMPT_CACHING_OPUS="1" DISABLE_PROMPT_CACHING_SONNET="1" DISABLE_PROMPT_CACHING_HAIKU="1" claude'"'"'' >> ~/.zshrc`;
-    const MAC_ETGX_TEMPLATE = `echo 'alias etgx='"'"'cd {FOLDER} && ANTHROPIC_AUTH_TOKEN="{KEY}" ANTHROPIC_BASE_URL="https://llmgate.etg.team" ANTHROPIC_MODEL="bedrock-claude-4-6-opus" ANTHROPIC_DEFAULT_OPUS_MODEL="bedrock-claude-4-6-opus" ANTHROPIC_DEFAULT_SONNET_MODEL="bedrock-claude-4-6-sonnet" ANTHROPIC_DEFAULT_HAIKU_MODEL="bedrock-claude-4-5-haiku" CLAUDE_CODE_ENABLE_TELEMETRY="0" CLAUDE_CODE_DISABLE_NONESSENTIAL_TRAFFIC="1" CLAUDE_CODE_DISABLE_EXPERIMENTAL_BETAS="1" DISABLE_PROMPT_CACHING_OPUS="1" DISABLE_PROMPT_CACHING_SONNET="1" DISABLE_PROMPT_CACHING_HAIKU="1" claude --dangerously-skip-permissions'"'"'' >> ~/.zshrc`;
+    const MAC_ETG_TEMPLATE  = `echo 'alias etg='"'"'cd {FOLDER} && ANTHROPIC_AUTH_TOKEN="{KEY}" ANTHROPIC_BASE_URL="https://llmgate.etg.team" ANTHROPIC_MODEL="bedrock-claude-4-6-sonnet" ANTHROPIC_DEFAULT_OPUS_MODEL="bedrock-claude-4-6-opus" ANTHROPIC_DEFAULT_SONNET_MODEL="bedrock-claude-4-6-sonnet" ANTHROPIC_DEFAULT_HAIKU_MODEL="bedrock-claude-4-5-haiku" CLAUDE_CODE_ENABLE_TELEMETRY="0" CLAUDE_CODE_DISABLE_NONESSENTIAL_TRAFFIC="1" CLAUDE_CODE_DISABLE_EXPERIMENTAL_BETAS="1" DISABLE_PROMPT_CACHING_OPUS="1" DISABLE_PROMPT_CACHING_SONNET="1" DISABLE_PROMPT_CACHING_HAIKU="1" claude'"'"'' >> ~/.zshrc`;
+    const MAC_ETGX_TEMPLATE = `echo 'alias etgx='"'"'cd {FOLDER} && ANTHROPIC_AUTH_TOKEN="{KEY}" ANTHROPIC_BASE_URL="https://llmgate.etg.team" ANTHROPIC_MODEL="bedrock-claude-4-6-sonnet" ANTHROPIC_DEFAULT_OPUS_MODEL="bedrock-claude-4-6-opus" ANTHROPIC_DEFAULT_SONNET_MODEL="bedrock-claude-4-6-sonnet" ANTHROPIC_DEFAULT_HAIKU_MODEL="bedrock-claude-4-5-haiku" CLAUDE_CODE_ENABLE_TELEMETRY="0" CLAUDE_CODE_DISABLE_NONESSENTIAL_TRAFFIC="1" CLAUDE_CODE_DISABLE_EXPERIMENTAL_BETAS="1" DISABLE_PROMPT_CACHING_OPUS="1" DISABLE_PROMPT_CACHING_SONNET="1" DISABLE_PROMPT_CACHING_HAIKU="1" claude --dangerously-skip-permissions'"'"'' >> ~/.zshrc`;
 
     const WIN_PROFILE_TEMPLATE =
 `function etg {
     Set-Location "{FOLDER}"
     $env:ANTHROPIC_AUTH_TOKEN = "{KEY}"
     $env:ANTHROPIC_BASE_URL = "https://llmgate.etg.team"
-    $env:ANTHROPIC_MODEL = "bedrock-claude-4-6-opus"
+    $env:ANTHROPIC_MODEL = "bedrock-claude-4-6-sonnet"
     $env:ANTHROPIC_DEFAULT_OPUS_MODEL = "bedrock-claude-4-6-opus"
     $env:ANTHROPIC_DEFAULT_SONNET_MODEL = "bedrock-claude-4-6-sonnet"
     $env:ANTHROPIC_DEFAULT_HAIKU_MODEL = "bedrock-claude-4-5-haiku"
@@ -1074,7 +1074,7 @@ function etgx {
     Set-Location "{FOLDER}"
     $env:ANTHROPIC_AUTH_TOKEN = "{KEY}"
     $env:ANTHROPIC_BASE_URL = "https://llmgate.etg.team"
-    $env:ANTHROPIC_MODEL = "bedrock-claude-4-6-opus"
+    $env:ANTHROPIC_MODEL = "bedrock-claude-4-6-sonnet"
     $env:ANTHROPIC_DEFAULT_OPUS_MODEL = "bedrock-claude-4-6-opus"
     $env:ANTHROPIC_DEFAULT_SONNET_MODEL = "bedrock-claude-4-6-sonnet"
     $env:ANTHROPIC_DEFAULT_HAIKU_MODEL = "bedrock-claude-4-5-haiku"
