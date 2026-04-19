@@ -561,7 +561,7 @@
   <script src="https://mcp.figma.com/mcp/html-to-design/capture.js" async></script>
 </head>
 <body>
-  <div style="position:fixed;top:12px;right:16px;font-size:11px;color:var(--color-text-footer);pointer-events:none;">38</div>
+  <div style="position:fixed;top:12px;right:16px;font-size:11px;color:var(--color-text-footer);pointer-events:none;">39</div>
   <div class="container">
     <header>
       <h1 id="pageTitle">Установка Claude Code на Mac, в терминале</h1>
@@ -1157,12 +1157,21 @@ function etgx {
       });
     }
 
+    function resolveFolder(raw, os) {
+      if (!raw) return 'FOLDER_PATH_HERE';
+      if (os === 'mac') {
+        return (raw.startsWith('/') || raw.startsWith('~')) ? raw : '~/' + raw;
+      } else {
+        return /^[a-zA-Z]:\\/.test(raw) ? raw : '%USERPROFILE%\\' + raw;
+      }
+    }
+
     /* ── Update on input ── */
     function updateAliases() {
       updateLockState();
       if (currentOS === 'mac') {
-        const key    = document.getElementById('macKeyInput').value.trim()    || 'API_KEY_HERE';
-        const folder = document.getElementById('macFolderInput').value.trim() || 'FOLDER_PATH_HERE';
+        const key    = document.getElementById('macKeyInput').value.trim() || 'API_KEY_HERE';
+        const folder = resolveFolder(document.getElementById('macFolderInput').value.trim(), 'mac');
         const etgEl  = document.getElementById('aliasEtg');
         const etgxEl = document.getElementById('aliasEtgx');
         etgEl.dataset.raw  = MAC_ETG_TEMPLATE.replaceAll('{KEY}', key).replaceAll('{FOLDER}', folder);
@@ -1170,8 +1179,8 @@ function etgx {
         etgEl.innerHTML  = highlightShell(etgEl.dataset.raw);
         etgxEl.innerHTML = highlightShell(etgxEl.dataset.raw);
       } else {
-        const key    = document.getElementById('winKeyInput').value.trim()    || 'API_KEY_HERE';
-        const folder = document.getElementById('winFolderInput').value.trim() || 'FOLDER_PATH_HERE';
+        const key    = document.getElementById('winKeyInput').value.trim() || 'API_KEY_HERE';
+        const folder = resolveFolder(document.getElementById('winFolderInput').value.trim(), 'win');
         const profileEl = document.getElementById('winProfile');
         profileEl.dataset.raw = WIN_PROFILE_TEMPLATE.replaceAll('{KEY}', key).replaceAll('{FOLDER}', folder);
         profileEl.innerHTML = highlightPS(profileEl.dataset.raw);
