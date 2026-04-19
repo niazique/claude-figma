@@ -517,11 +517,51 @@
       font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
     }
 
+    .folder-row {
+      display: flex;
+      align-items: center;
+      background: var(--color-card);
+      border: 1px solid var(--color-input-border);
+      border-radius: 10px;
+      overflow: hidden;
+      cursor: pointer;
+      transition: border-color 0.15s, box-shadow 0.15s;
+    }
+
+    .folder-row:hover {
+      border-color: var(--color-accent);
+    }
+
+    .folder-row-text {
+      flex: 1;
+      padding: 10px 14px;
+      font-family: "SF Mono", "Fira Code", monospace;
+      font-size: 13px;
+      color: var(--color-input-text);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      user-select: none;
+    }
+
+    .folder-row-text.placeholder {
+      color: var(--color-input-placeholder);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    }
+
+    .folder-row-icon {
+      padding: 0 12px 0 0;
+      color: var(--color-input-placeholder);
+      flex-shrink: 0;
+      display: flex;
+      align-items: center;
+    }
+
   </style>
   <script src="https://mcp.figma.com/mcp/html-to-design/capture.js" async></script>
 </head>
 <body>
-  <div style="position:fixed;top:12px;right:16px;font-size:11px;color:var(--color-text-footer);pointer-events:none;">36</div>
+  <div style="position:fixed;top:12px;right:16px;font-size:11px;color:var(--color-text-footer);pointer-events:none;">37</div>
   <div class="container">
     <header>
       <h1 id="pageTitle">Установка Claude Code на Mac, в терминале</h1>
@@ -612,10 +652,11 @@
           <p class="step-desc">Алиас — это короткое слово-команда, которое заменяет длинную строку с настройками. После добавления можно просто написать <code style="color:#86868b">etg</code> в терминале — и Claude запустится с нужными параметрами автоматически.</p>
           <p class="step-desc" style="margin-top: 6px;">Ключ можно получить на <a href="https://chat.etg.team/" target="_blank" style="color:#0071e3;text-decoration:none;font-weight:500">chat.etg.team</a> — войди через Keycloak, нажми на иконку профиля в правом верхнем углу, перейди в настройки аккаунта. В левой колонке выбери <strong style="color:#1d1d1f">Аккаунт</strong> — в самом низу будет раздел с API ключами. Создай новый ключ, он автоматически скопируется в буфер обмена.</p>
 
+          <input id="macFolderPicker" type="file" webkitdirectory style="display:none" onchange="onFolderPicked('mac',this)" />
           <div class="api-key-input-wrap">
-            <div class="input-row">
-              <input id="macFolderInput" type="text" placeholder="Укажи папку для своих проектов из 1-го пункта"
-                oninput="updateAliases()" autocomplete="off" spellcheck="false" />
+            <div class="folder-row" onclick="document.getElementById('macFolderPicker').click()">
+              <div id="macFolderDisplay" class="folder-row-text placeholder">Выбери папку для своих проектов из 1-го пункта</div>
+              <div class="folder-row-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/></svg></div>
             </div>
             <div class="input-row">
               <input id="macKeyInput" type="text" placeholder="Вставь свой API key, чтобы он появился в команде"
@@ -782,10 +823,11 @@
           <p class="step-desc">На Windows вместо алиасов используются функции PowerShell — принцип тот же: вводишь <code style="color:#86868b">etg</code> и Claude запускается с нужными параметрами.</p>
           <p class="step-desc" style="margin-top:6px;">Ключ можно получить на <a href="https://chat.etg.team/" target="_blank" style="color:#0071e3;text-decoration:none;font-weight:500">chat.etg.team</a> — войди через Keycloak, нажми на иконку профиля в правом верхнем углу, перейди в настройки аккаунта. В левой колонке выбери <strong style="color:#1d1d1f">Аккаунт</strong> — в самом низу будет раздел с API ключами. Создай новый ключ, он автоматически скопируется в буфер обмена.</p>
 
+          <input id="winFolderPicker" type="file" webkitdirectory style="display:none" onchange="onFolderPicked('win',this)" />
           <div class="api-key-input-wrap">
-            <div class="input-row">
-              <input id="winFolderInput" type="text" placeholder="Укажи папку для своих проектов из 1-го пункта"
-                oninput="updateAliases()" autocomplete="off" spellcheck="false" />
+            <div class="folder-row" onclick="document.getElementById('winFolderPicker').click()">
+              <div id="winFolderDisplay" class="folder-row-text placeholder">Выбери папку для своих проектов из 1-го пункта</div>
+              <div class="folder-row-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/></svg></div>
             </div>
             <div class="input-row">
               <input id="winKeyInput" type="text" placeholder="Вставь свой API key, чтобы он появился в команде"
@@ -1117,12 +1159,26 @@ function etgx {
       });
     }
 
+    const folderPaths = { mac: '', win: '' };
+
+    function onFolderPicked(os, input) {
+      if (!input.files || input.files.length === 0) return;
+      const rel  = input.files[0].webkitRelativePath || '';
+      const name = rel ? rel.split('/')[0] : input.files[0].name;
+      const path = os === 'mac' ? '~/Desktop/' + name : '%USERPROFILE%\\Desktop\\' + name;
+      folderPaths[os] = path;
+      const display = document.getElementById(os === 'mac' ? 'macFolderDisplay' : 'winFolderDisplay');
+      display.textContent = path;
+      display.classList.remove('placeholder');
+      updateAliases();
+    }
+
     /* ── Update on input ── */
     function updateAliases() {
       updateLockState();
       if (currentOS === 'mac') {
-        const key    = document.getElementById('macKeyInput').value.trim()    || 'API_KEY_HERE';
-        const folder = document.getElementById('macFolderInput').value.trim() || 'FOLDER_PATH_HERE';
+        const key    = document.getElementById('macKeyInput').value.trim() || 'API_KEY_HERE';
+        const folder = folderPaths.mac || 'FOLDER_PATH_HERE';
         const etgEl  = document.getElementById('aliasEtg');
         const etgxEl = document.getElementById('aliasEtgx');
         etgEl.dataset.raw  = MAC_ETG_TEMPLATE.replaceAll('{KEY}', key).replaceAll('{FOLDER}', folder);
@@ -1130,8 +1186,8 @@ function etgx {
         etgEl.innerHTML  = highlightShell(etgEl.dataset.raw);
         etgxEl.innerHTML = highlightShell(etgxEl.dataset.raw);
       } else {
-        const key    = document.getElementById('winKeyInput').value.trim()    || 'API_KEY_HERE';
-        const folder = document.getElementById('winFolderInput').value.trim() || 'FOLDER_PATH_HERE';
+        const key    = document.getElementById('winKeyInput').value.trim() || 'API_KEY_HERE';
+        const folder = folderPaths.win || 'FOLDER_PATH_HERE';
         const profileEl = document.getElementById('winProfile');
         profileEl.dataset.raw = WIN_PROFILE_TEMPLATE.replaceAll('{KEY}', key).replaceAll('{FOLDER}', folder);
         profileEl.innerHTML = highlightPS(profileEl.dataset.raw);
@@ -1166,12 +1222,10 @@ function etgx {
 
     function updateLockState() {
       const macKey    = document.getElementById('macKeyInput').value.trim();
-      const macFolder = document.getElementById('macFolderInput').value.trim();
       const winKey    = document.getElementById('winKeyInput').value.trim();
-      const winFolder = document.getElementById('winFolderInput').value.trim();
 
-      const macLocked = !macKey || !macFolder;
-      const winLocked = !winKey || !winFolder;
+      const macLocked = !macKey || !folderPaths.mac;
+      const winLocked = !winKey || !folderPaths.win;
 
       ['aliasEtg', 'aliasEtgx'].forEach(id => {
         const block = document.getElementById(id)?.closest('.cmd-block');
