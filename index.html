@@ -517,25 +517,11 @@
       font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
     }
 
-    .pick-btn {
-      margin: 5px 6px 5px 0;
-      padding: 4px 10px;
-      background: var(--color-pick-btn-bg);
-      border: none;
-      border-radius: 6px;
-      font-size: 12px;
-      color: var(--color-toggle-bg);
-      cursor: pointer;
-      white-space: nowrap;
-      transition: background 0.15s, color 0.15s;
-    }
-
-    .pick-btn:hover { background: #434354; color: var(--color-toggle-bg); }
   </style>
   <script src="https://mcp.figma.com/mcp/html-to-design/capture.js" async></script>
 </head>
 <body>
-  <div style="position:fixed;top:12px;right:16px;font-size:11px;color:var(--color-text-footer);pointer-events:none;">35</div>
+  <div style="position:fixed;top:12px;right:16px;font-size:11px;color:var(--color-text-footer);pointer-events:none;">36</div>
   <div class="container">
     <header>
       <h1 id="pageTitle">Установка Claude Code на Mac, в терминале</h1>
@@ -628,9 +614,8 @@
 
           <div class="api-key-input-wrap">
             <div class="input-row">
-              <input id="macFolderInput" type="text" placeholder="Нажмите чтобы выбрать папку"
-                readonly onclick="pickFolder()" autocomplete="off" spellcheck="false" style="cursor:pointer" />
-              <button class="pick-btn" onclick="pickFolder()">выбрать</button>
+              <input id="macFolderInput" type="text" placeholder="Укажи папку для своих проектов из 1-го пункта"
+                oninput="updateAliases()" autocomplete="off" spellcheck="false" />
             </div>
             <div class="input-row">
               <input id="macKeyInput" type="text" placeholder="Вставь свой API key, чтобы он появился в команде"
@@ -799,9 +784,8 @@
 
           <div class="api-key-input-wrap">
             <div class="input-row">
-              <input id="winFolderInput" type="text" placeholder="Нажмите чтобы выбрать папку"
-                readonly onclick="pickFolder()" autocomplete="off" spellcheck="false" style="cursor:pointer" />
-              <button class="pick-btn" onclick="pickFolder()">выбрать</button>
+              <input id="winFolderInput" type="text" placeholder="Укажи папку для своих проектов из 1-го пункта"
+                oninput="updateAliases()" autocomplete="off" spellcheck="false" />
             </div>
             <div class="input-row">
               <input id="winKeyInput" type="text" placeholder="Вставь свой API key, чтобы он появился в команде"
@@ -1247,19 +1231,6 @@ function etgx {
         block.addEventListener('click', () => copyCmd(block));
       });
     });
-
-    /* ── Folder picker ── */
-    async function pickFolder() {
-      try {
-        const handle = await window.showDirectoryPicker();
-        if (currentOS === 'mac') {
-          document.getElementById('macFolderInput').value = '~/Desktop/' + handle.name;
-        } else {
-          document.getElementById('winFolderInput').value = '%USERPROFILE%\\Desktop\\' + handle.name;
-        }
-        updateAliases();
-      } catch (e) {}
-    }
 
     /* ── OS switch ── */
     function setOS(os) {
