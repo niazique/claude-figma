@@ -8,7 +8,7 @@
   <script src="https://mcp.figma.com/mcp/html-to-design/capture.js" async></script>
 </head>
 <body>
-  <div style="position:fixed;top:12px;right:16px;font-size:11px;color:var(--color-text-footer);pointer-events:none;">42</div>
+  <div style="position:fixed;top:12px;right:16px;font-size:11px;color:var(--color-text-footer);pointer-events:none;">43</div>
   <div class="container">
     <header>
       <h1>У меня свой Claude</h1>
@@ -18,6 +18,9 @@
       <div class="step-body" style="padding-top: 18px;">
         <p class="step-desc" style="padding-left: 0; margin: 0; font-size: 15px; line-height: 1.6;">
           Тогда тебе достаточно установить плагин Figma. Открой <strong style="color:#1d1d1f">Настройки → Extensions</strong>, найди официальный плагин Figma и установи его — он автоматически подключит MCP-серверы и поставит нужные скиллы.
+        </p>
+        <p class="step-desc" style="padding-left: 0; margin-top: 12px; font-size: 15px; line-height: 1.6;">
+          Также рекомендуем завести одну папку для всех вайбкод-проектов — например <strong style="color:#1d1d1f">vibe</strong> на рабочем столе. Клод будет знать, где искать файлы, и ничего не потеряется.
         </p>
       </div>
     </div>
@@ -746,9 +749,6 @@ function etgx {
       document.getElementById('winSteps').style.display = isMac ? 'none' : 'flex';
       document.getElementById('macBtn').classList.toggle('active', isMac);
       document.getElementById('winBtn').classList.toggle('active', !isMac);
-      document.getElementById('pageTitle').textContent = isMac
-        ? 'Установка Claude Code на Mac, в терминале'
-        : 'Установка Claude Code на Windows, в PowerShell';
       highlightAll();
       updateAliases();
     }
