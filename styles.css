@@ -348,7 +348,7 @@ footer { margin-top: 48px; text-align: center; font-size: 13px; color: var(--col
 .faq-bg-icon {
   position: absolute;
   right:    -10px;   /* горизонталь: отрицательное — правее края, положительное — левее */
-  top:       44px;   /* вертикаль: от верха секции (заголовок ~44px высотой) */
+  top:       20px;   /* вертикаль: от верха секции */
   width:    140px;   /* размер (оригинал 28px, текущий ×5) */
   height:   140px;
   opacity:    0.2;   /* прозрачность: 0 = невидимо, 1 = полностью */
@@ -367,6 +367,8 @@ footer { margin-top: 48px; text-align: center; font-size: 13px; color: var(--col
   display: flex;
   flex-direction: column;
   gap: 16px;
+  position: relative;
+  z-index: 1;
 }
 
 .faq-item {
