@@ -132,7 +132,7 @@ header h1 {
 .steps {
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: 28px;
 }
 
 .step {
