@@ -9,7 +9,7 @@
   <script src="https://mcp.figma.com/mcp/html-to-design/capture.js" async></script>
 </head>
 <body>
-  <div id="versionBadge" data-v="47" style="position:fixed;top:12px;right:16px;font-size:11px;color:var(--color-text-footer);z-index:9999;">47</div>
+  <div id="versionBadge" data-v="48" style="position:fixed;top:12px;right:16px;font-size:11px;color:var(--color-text-footer);z-index:9999;">48</div>
   <div class="container">
     <header>
       <h1>У меня свой Claude</h1>
@@ -437,6 +437,13 @@ function etgx {
         Самый лучший способ получить ответ на любой вопрос — спросить у Клода.
       </p>
       <div class="faq-list">
+
+        <details class="faq-item">
+          <summary>Claude через etg не подключается — в чём дело? <span class="faq-chevron"><svg viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg></span></summary>
+          <div class="faq-answer"><div class="faq-answer-inner">
+            <p>Рабочий Claude (bedrock) доступен только из корпоративной сети. Если запускаешь через <code>etg</code> вне офиса — обязательно подключись к рабочему VPN, иначе сервер ETG будет недоступен и подключение не пройдёт.</p>
+          </div></div>
+        </details>
 
         <details class="faq-item">
           <summary>У меня уже есть личная подписка на Claude — как использовать ETG для работы? <span class="faq-chevron"><svg viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg></span></summary>
