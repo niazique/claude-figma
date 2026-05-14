@@ -1,9 +1,30 @@
 (function () {
   const ENDPOINT = 'https://script.google.com/macros/s/AKfycbyKO1QjgHcnKkoREMWp0zPbKjeWUHiXeP5HY4UDFthzcgqJw2tZaWwMRDTPC_xU9RWA/exec';
 
+  const style = document.createElement('style');
+  style.textContent = `
+    @keyframes hm-spin { to { transform: rotate(360deg); } }
+    #versionBadge .hm-spinner {
+      width: 12px;
+      height: 12px;
+      border: 2px solid rgba(174,174,178,0.3);
+      border-top-color: #aeaeb2;
+      border-radius: 50%;
+      animation: hm-spin 0.7s linear infinite;
+    }
+    #versionBadge.hm-close {
+      font-size: 20px;
+      line-height: 1;
+      padding: 14px;
+      margin: -14px;
+    }
+  `;
+  document.head.appendChild(style);
+
   // — трекинг кликов —
   document.addEventListener('click', function (e) {
     if (e.target.closest('#versionBadge')) return;
+    if (document.getElementById('heatmapCanvas')) return;
     const pageW = document.documentElement.scrollWidth;
     const pageH = document.documentElement.scrollHeight;
     const x = e.pageX;
@@ -24,23 +45,45 @@
 
     badge.style.cursor = 'pointer';
 
+    let loading = false;
+
+    function showVersion() {
+      badge.classList.remove('hm-close');
+      badge.textContent = badge.dataset.v;
+    }
+    function showLoading() {
+      badge.classList.remove('hm-close');
+      badge.innerHTML = '<div class="hm-spinner"></div>';
+    }
+    function showClose() {
+      badge.classList.add('hm-close');
+      badge.textContent = '×';
+    }
+
     badge.addEventListener('click', async function () {
       const existing = document.getElementById('heatmapCanvas');
-      if (existing) { existing.remove(); return; }
+      if (existing) {
+        existing.remove();
+        showVersion();
+        return;
+      }
+      if (loading) return;
 
-      badge.textContent = '…';
+      loading = true;
+      showLoading();
 
       let clicks;
       try {
         const res = await fetch(ENDPOINT);
         clicks = await res.json();
       } catch (e) {
+        loading = false;
+        badge.classList.remove('hm-close');
         badge.textContent = '!';
-        setTimeout(() => badge.textContent = badge.dataset.v, 2000);
+        setTimeout(showVersion, 2000);
         return;
       }
-
-      badge.textContent = badge.dataset.v;
+      loading = false;
 
       const pageW = document.documentElement.scrollWidth;
       const pageH = document.documentElement.scrollHeight;
@@ -57,7 +100,7 @@
         height:        pageH + 'px',
         zIndex:        '9998',
         pointerEvents: 'all',
-        cursor:        'crosshair',
+        cursor:        'default',
       });
 
       const ctx = canvas.getContext('2d');
@@ -81,18 +124,13 @@
         ctx.fill();
       });
 
-      // счётчик
       ctx.globalCompositeOperation = 'source-over';
       ctx.fillStyle = 'rgba(255,255,255,0.55)';
       ctx.font = '13px -apple-system, sans-serif';
       ctx.fillText(clicks.length + ' кликов', 16, pageH - 16);
 
       document.body.appendChild(canvas);
-
-      canvas.addEventListener('click', () => canvas.remove());
-      document.addEventListener('keydown', function handler(e) {
-        if (e.key === 'Escape') { canvas.remove(); document.removeEventListener('keydown', handler); }
-      });
+      showClose();
     });
   });
 })();
