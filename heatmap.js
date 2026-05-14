@@ -10,7 +10,7 @@
       border: 2px solid rgba(174,174,178,0.3);
       border-top-color: #aeaeb2;
       border-radius: 50%;
-      animation: hm-spin 0.5s linear infinite;
+      animation: hm-spin 0.2s linear infinite;
     }
     #versionBadge.hm-close {
       font-size: 16px !important;
