@@ -13,7 +13,7 @@
       animation: hm-spin 0.7s linear infinite;
     }
     #versionBadge.hm-close {
-      font-size: 20px;
+      font-size: 16px !important;
       line-height: 1;
       padding: 14px;
       margin: -14px;
