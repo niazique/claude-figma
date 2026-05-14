@@ -1,5 +1,5 @@
 (function () {
-  const ENDPOINT = 'https://script.google.com/a/macros/emergingtravel.com/s/AKfycbxRvriYMQKxOroXhZnc1fHr9BjhpLGzaR0v1c7FOSJZhnutekdzsGn8lzYlG2yLtl6q/exec';
+  const ENDPOINT = 'https://script.google.com/macros/s/AKfycbyKO1QjgHcnKkoREMWp0zPbKjeWUHiXeP5HY4UDFthzcgqJw2tZaWwMRDTPC_xU9RWA/exec';
 
   // — трекинг кликов —
   document.addEventListener('click', function (e) {
